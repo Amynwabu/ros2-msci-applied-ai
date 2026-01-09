@@ -1,0 +1,63 @@
+{
+  "name": "ROS2 Humble Dev Container",
+  "image": "osrf/ros:humble-desktop-full",
+  
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": true,
+      "installOhMyZsh": true,
+      "upgradePackages": true,
+      "username": "vscode",
+      "userUid": "automatic",
+      "userGid": "automatic"
+    },
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.10"
+    },
+    "ghcr.io/devcontainers/features/git:1": {}
+  },
+  
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-vscode.cpptools",
+        "ms-vscode.cmake-tools",
+        "twxs.cmake",
+        "ms-iot.vscode-ros",
+        "eamodio.gitlens"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/bin/python3",
+        "python.linting.enabled": true,
+        "python.linting.pylintEnabled": true,
+        "python.formatting.provider": "black",
+        "editor.formatOnSave": true,
+        "files.associations": {
+          "*.repos": "yaml",
+          "*.world": "xml",
+          "*.xacro": "xml"
+        }
+      }
+    }
+  },
+  
+  "runArgs": [
+    "--network=host",
+    "--cap-add=SYS_PTRACE",
+    "--security-opt=seccomp=unconfined",
+    "--security-opt=apparmor=unconfined",
+    "--volume=/tmp/.X11-unix:/tmp/.X11-unix"
+  ],
+  
+  "containerEnv": {
+    "DISPLAY": "${localEnv:DISPLAY}",
+    "ROS_DOMAIN_ID": "42",
+    "RMW_IMPLEMENTATION": "rmw_cyclonedds_cpp"
+  },
+  
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y python3-pip python3-colcon-common-extensions python3-rosdep && sudo rosdep init || true && rosdep update && echo 'source /opt/ros/humble/setup.bash' >> ~/.bashrc",
+  
+  "remoteUser": "root"
+}
