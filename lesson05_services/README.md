@@ -24,59 +24,37 @@ int64 sum
 
 **Format**: Request fields above `---`, response fields below
 
+
+## ROS2 Service Flow
+
+Client (Waiter)
+    |
+    v
+[Request] → Server (Kitchen Manager)
+    ^
+    |
+[Response]
+
+Client WAITS here until server responds!
+
+
+## Server Creating a Service Interface
+## Step 1: Create a new package for service definitions
+
+cd ~/ros2_ws/src
+ros2 pkg create --build-type ament_cmake my_interfaces
+# ament_cmake for C++ interface packages (even if we use from Python)
+
+
+## Step 2: Create the srv directory
+
+
 ## Server Implementation (Python)
 
-```python
-import rclpy
-from rclpy.node import Node
-from example_interfaces.srv import AddTwoInts
-
-class Server(Node):
-    def __init__(self):
-        super().__init__('server')
-        self.srv = self.create_service(
-            AddTwoInts,
-            'add',
-            self.handle
-        )
-    
-    def handle(self, request, response):
-        response.sum = request.a + request.b
-        return response
-
-def main(args=None):
-    rclpy.init(args=args)
-    rclpy.spin(Server())
-    rclpy.shutdown()
-```
 
 ## Client Implementation (Python)
 
-```python
-import rclpy
-from rclpy.node import Node
-from example_interfaces.srv import AddTwoInts
 
-class Client(Node):
-    def __init__(self):
-        super().__init__('client')
-        self.cli = self.create_client(AddTwoInts, 'add')
-        while not self.cli.wait_for_service(timeout_sec=1.0):
-            self.get_logger().info('Waiting for service...')
-    
-    def call(self, a, b):
-        req = AddTwoInts.Request()
-        req.a, req.b = a, b
-        future = self.cli.call_async(req)
-        rclpy.spin_until_future_complete(self, future)
-        return future.result()
-
-def main(args=None):
-    rclpy.init(args=args)
-    client = Client()
-    result = client.call(5, 3)
-    print(f'5 + 3 = {result.sum}')
-    rclpy.shutdown()
 ```
 
 ## CLI Commands
