@@ -39,40 +39,14 @@ source install/setup.bash
 
 ⚠️ **Important**: Source in EVERY new terminal before running nodes!
 
-### Step 3: Run the Nodes (In Separate Terminals)
+### Step 3: Run the Node
 
-**Terminal 1 - Run the Waiter (Publisher)**:
+
 ```bash
-source ~/ros2_ws/install/setup.bash
-ros2 run test2_py_pkg waiter
+ros2 run test2_py_pkg create_topic
 ```
 
-**Terminal 2 - Run the Chef (Subscriber)**:
-```bash
-source ~/ros2_ws/install/setup.bash
-ros2 run test2_py_pkg chef
-```
 
-### Expected Output
-
-**Waiter Terminal**:
-```
-[INFO] [Waiter node started!]
-[INFO] [Announcing: Order #1: Burger]
-[INFO] [Announcing: Order #2: Burger]
-[INFO] [Announcing: Order #3: Burger]
-...
-```
-
-**Chef Terminal**:
-```
-[INFO] [Chef node started! Listening for orders...]
-[INFO] [Received order: Order #1: Burger]
-[INFO] [Starting to cook...]
-[INFO] [Received order: Order #2: Burger]
-[INFO] [Starting to cook...]
-...
-```
 
 ## Essential ROS2 Topic Commands
 
@@ -89,107 +63,6 @@ ros2 topic list
 /rosout
 ```
 
-### Echo Topic Messages in Real-Time
-
-```bash
-ros2 topic echo /orders
-```
-
-**Output**:
-```
-data: 'Order #1: Burger'
----
-data: 'Order #2: Burger'
----
-data: 'Order #3: Burger'
----
-```
-
-### Get Topic Information
-
-```bash
-ros2 topic info /orders
-```
-
-**Output**:
-```
-Type: std_msgs/msg/String
-Publisher count: 1
-Subscription count: 1
-```
-
-### Get Topic Rate and Bandwidth
-
-```bash
-ros2 topic hz /orders  # Shows publish frequency
-ros2 topic bw /orders  # Shows bandwidth usage
-```
-
-### View Topic Data Type
-
-```bash
-ros2 interface show std_msgs/msg/String
-```
-
-**Output**:
-```
-string data
-```
-
-## Understanding Message Types
-
-### Common Message Types
-
-- **std_msgs/msg/String**: Text messages
-- **std_msgs/msg/Int32**: Integer values
-- **std_msgs/msg/Float32**: Float values
-- **geometry_msgs/msg/Twist**: Robot velocity (linear + angular)
-- **sensor_msgs/msg/Image**: Camera images
-- **sensor_msgs/msg/LaserScan**: LIDAR data
-
-### Using Different Message Types
-
-**Example with Int32**:
-```python
-from std_msgs.msg import Int32
-
-self.publisher = self.create_publisher(Int32, 'counter', 10)
-msg = Int32()
-msg.data = 42
-self.publisher.publish(msg)
-```
-
-## Advanced: Multiple Publishers and Subscribers
-
-### Multiple Subscribers on One Topic
-
-You can have as many subscribers as you want listening to the same topic:
-
-```bash
-# Terminal 1: Publisher
-ros2 run test2_py_pkg waiter
-
-# Terminal 2: First Subscriber
-ros2 run test2_py_pkg chef
-
-# Terminal 3: Second Subscriber
-ros2 run test2_py_pkg chef  # Run chef again
-
-# Terminal 4: Monitor with echo
-ros2 topic echo /orders
-```
-
-All subscribers receive the same messages independently!
-
-### Multiple Publishers on One Topic
-
-You can also have multiple publishers sending to the same topic:
-
-```python
-# Both nodes publish to 'orders'
-publisher1 = node1.create_publisher(String, 'orders', 10)
-publisher2 = node2.create_publisher(String, 'orders', 10)
-```
 
 ## Common Issues and Debugging
 
