@@ -4,7 +4,7 @@
 Navigate to: ~/ros2_ws/src/test2_py_pkg/test2_py_pkg/
 Create a new file: `topic_creator.py`
 
-```
+
 
 ## Registering Your Node
 
