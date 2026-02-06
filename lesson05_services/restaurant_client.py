@@ -3,9 +3,7 @@
 import rclpy
 from rclpy.node import Node
 from my_interfaces.srv import TakeOrder
-# Import the service type
 import sys
-# For command-line arguments
 
 
 class RestaurantClient(Node):
@@ -13,12 +11,7 @@ class RestaurantClient(Node):
         super().__init__('restaurant_client')
         
         # CREATE A CLIENT FOR THE SERVICE
-        # create_client() takes 2 arguments:
-        #   1. Service type (TakeOrder)
-        #   2. Service name ('/take_order')
-        
         self.cli = self.create_client(TakeOrder, '/take_order')
-        # This client connects to the /take_order service
         
         # Wait for server to be ready
         while not self.cli.wait_for_service(timeout_sec=1.0):
@@ -27,30 +20,19 @@ class RestaurantClient(Node):
         self.get_logger().info('✅ Connected to restaurant!')
     
     def send_request(self, item_name, quantity):
-        # CLIENT METHOD
-        # Create a request and send it to the server
-        
-        # Create request object
+        # Create request
         request = TakeOrder.Request()
-        # TakeOrder.Request contains: item_name, quantity
-        
         request.item_name = item_name
         request.quantity = quantity
         
         self.get_logger().info(f'🍽️  Placing order: {quantity}x {item_name}')
         
-        # Send the request and wait for response
-        # This is BLOCKING - execution pauses here until server responds
+        # Send request asynchronously
         future = self.cli.call_async(request)
-        
-        # Handle the response
         rclpy.spin_until_future_complete(self, future)
         
         if future.result() is not None:
             response = future.result()
-            # response.accepted = bool
-            # response.message = str
-            
             if response.accepted:
                 self.get_logger().info(f'✅ {response.message}')
             else:
@@ -68,8 +50,8 @@ def main(args=None):
         print("Example: ros2 run test2_py_pkg restaurant_client burger 2")
         return
     
-    item = sys.argv
-    quantity = int(sys.argv)
+    item = sys.argv[1]          # e.g., 'burger'
+    quantity = int(sys.argv[2]) # e.g., 2
     
     client = RestaurantClient()
     client.send_request(item, quantity)
