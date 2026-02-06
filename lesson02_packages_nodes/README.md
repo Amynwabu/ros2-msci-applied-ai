@@ -134,81 +134,14 @@ A node is a Python program that:
 
 ### Creating MyFirstNode (mynode.py)
 
-Create a new file: `src/test2_py_pkg/test2_py_pkg/mynode.py`
+Step 1: Create the Python File
+```
+Navigate to: cd ~/ros2_ws/src/test2_py_pkg/test2_py_pkg/
 
-```python
-#!/usr/bin/env python3
+Create a new file: mynode.py
 
-import rclpy
-from rclpy.node import Node
-
-
-class MyFirstNode(Node):
-    def __init__(self):
-        super().__init__('test_node')  # Name the node 'test_node'
-        self.counter_ = 0
-        
-        # Create a timer that calls timer_callback every 1.0 second
-        self.create_timer(1.0, self.timer_callback)
-        
-        # Log startup message
-        self.get_logger().info("Test Node Started!")
-    
-    def timer_callback(self):
-        self.counter_ += 1
-        # f-strings allow you to put variables inside text easily
-        self.get_logger().info(f"Hello from Test Node! Count: {self.counter_}")
-
-
-def main(args=None):
-    # Initialize ROS2 communication
-    rclpy.init(args=args)
-    
-    # Create and run the node
-    node = MyFirstNode()
-    
-    try:
-        # Keep the node running
-        rclpy.spin(node)
-    except KeyboardInterrupt:
-        # Handle Ctrl+C gracefully
-        pass
-    finally:
-        # Cleanup
-        node.destroy_node()
-        rclpy.shutdown()
-
-
-if __name__ == '__main__':
-    main()
 ```
 
-### Key Node Concepts Explained
-
-**Inheritance from Node**:
-```python
-class MyFirstNode(Node):
-    def __init__(self):
-        super().__init__('test_node')  # Initialize parent class with node name
-```
-
-**Creating a Timer**:
-```python
-self.create_timer(1.0, self.timer_callback)
-# Arguments: frequency (1.0 second = 1 Hz), callback function
-```
-
-**Logging**:
-```python
-self.get_logger().info("Message")
-self.get_logger().warn("Warning message")
-self.get_logger().error("Error message")
-```
-
-**Spinning**:
-```python
-rclpy.spin(node)  # Keep node running and process callbacks
-```
 
 ## Registering Your Node as an Entry Point
 
