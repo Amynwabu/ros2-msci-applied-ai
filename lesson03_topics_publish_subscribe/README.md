@@ -56,13 +56,6 @@ ros2 run test2_py_pkg create_topic
 ros2 topic list
 ```
 
-**Output**:
-```
-/orders
-/parameter_events
-/rosout
-```
-
 
 ## Common Issues and Debugging
 
@@ -112,39 +105,4 @@ ros2 topic echo /orders
 ros2 topic hz /orders
 ```
 
-## Practice Exercise
 
-### Create a Temperature Sensor Publisher
-
-1. Create a new file: `src/test2_py_pkg/test2_py_pkg/temperature_sensor.py`
-2. Implement a node that:
-   - Publishes temperature data to a topic `/temperature`
-   - Uses Float32 message type
-   - Simulates temperature readings (e.g., 20.0°C starting, increasing by 0.1 each second)
-   - Logs each published value
-3. Create a temperature monitor subscriber that listens and logs temperature
-4. Run both and verify they communicate
-
-## Comparison: Topics vs Services vs Actions
-
-| Feature | Topics | Services | Actions |
-|---------|--------|----------|----------|
-| **Pattern** | Pub-Sub | Request-Response | Asynchronous Goal |
-| **Communication** | Asynchronous | Synchronous | Asynchronous with feedback |
-| **Type** | Many-to-Many | One-to-One | One-to-One |
-| **Best for** | Continuous data (sensors) | Occasional requests | Long-running tasks |
-| **Example** | Temperature streaming | Request calculation | Robot navigation |
-
-## Summary
-
-- **Topics** enable asynchronous, many-to-many communication
-- **Publishers** send data to topics without knowing about subscribers
-- **Subscribers** listen to topics and react to arriving messages
-- Topics are created automatically by ROS2
-- The Pub-Sub pattern decouples nodes, making systems flexible and scalable
-- Use `ros2 topic` commands to inspect and debug topics
-- Message types define the structure of data (String, Int32, custom types, etc.)
-
-## Next Lesson
-
-In the next lesson, we'll explore **ROS2 Services** and implement the **Request-Response pattern** for synchronous communication between nodes.
