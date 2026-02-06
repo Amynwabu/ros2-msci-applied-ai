@@ -4,29 +4,23 @@
 
 Launch files allow you to **start multiple ROS2 nodes with a single command** instead of opening separate terminals.
 
-## Launch File (Python Format)
+## Creating a File 
 
-File: `launch/my_system.launch.py`
+### Step 1: Create launch directory
 
-```python
-from launch import LaunchDescription
-from launch_ros.actions import Node
+mkdir -p ~/ros2_ws/src/test2_py_pkg/launch
 
-def generate_launch_description():
-    return LaunchDescription([
-        Node(
-            package='my_package',
-            executable='node1',
-            name='node1_instance'
-        ),
-        Node(
-            package='my_package',
-            executable='node2',
-            name='node2_instance',
-            output='screen'  # Show logs in terminal
-        ),
-    ])
+### Step 2: Create launch file
 ```
+Navigate to: cd ~/ros2_ws/src/test2_py_pkg/launch
+
+Create file: restaurant_system.launch.py
+
+nano ~/ros2_ws/src/test2_py_pkg/launch/all_nodes.py
+```
+
+
+
 
 ## CMakeLists.txt Configuration
 
