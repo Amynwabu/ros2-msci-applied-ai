@@ -50,7 +50,8 @@ mkdir my_interfaces/srv
 ```
 ## Step 3: Create the service definition file
 ```bash
-Navigate to File: ~/ros2_ws/src/my_interfaces/srv/TakeOrder.srv
+Navigate to: cd ~/ros2_ws/src/my_interfaces/srv
+Create file: TakeOrder.srv
 ```
 
 ```bash
@@ -82,11 +83,13 @@ ros2 interface list | grep TakeOrder
 
 ## Creating the Service Server
 ```bash
-File: ~/ros2_ws/src/test2_py_pkg/test2_py_pkg/restaurant_server.py
+File: ~/ros2_ws/src/test2_py_pkg/test2_py_pkg
+Create file: restaurant_server.py
 ```
 ## Creating the Service Client
 ```
-File: ~/ros2_ws/src/test2_py_pkg/test2_py_pkg/restaurant_client.py
+Navigate to: cd ~/ros2_ws/src/test2_py_pkg/test2_py_pkg
+Create file: restaurant_client.py
 ```
 ## Register Service Nodes
 ```bash
