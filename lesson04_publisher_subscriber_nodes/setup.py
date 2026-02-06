@@ -26,7 +26,7 @@ setup(
         'console_scripts': [
             'my_first_node = test2_py_pkg.mynode:main',
             'create_topic = test2_py_pkg.topic_creator:main',
-            'waiter = test2_py_pkg.wiater:main',
+            'waiter = test2_py_pkg. waiter:main',
             'chef = test2_py_pkg.chef:main',
         ],
     },
